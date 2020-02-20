@@ -20,6 +20,7 @@ import {
     withRouter,
 
 } from "react-router-dom";
+import {userService} from '../Services/userServices'
 
 const swidth=window.innerWidth;
 const sheight=window.innerHeight;
@@ -36,6 +37,13 @@ class login extends Component{
         }
     }
 
+    componentDidMount() {
+        const {emailAddress,checked}=this.state
+        // const rememberMe = localStorage.getItem('rememberMe') === 'true';
+        // const user = rememberMe ? localStorage.getItem('user') : '';
+        // this.setState({ emailAddress:user, checked:rememberMe });
+    }
+
     handleChange =()=>{
         this.setState({checked:!this.state.checked})
     }
@@ -44,29 +52,47 @@ class login extends Component{
         this.setState({password:text})
     }
 
-    loginAction = () =>{
-        let {history}=this.props;
-        const data= {
-            username: this.state.emailAddress,
+    loginAction = async () => {
+        let {history} = this.props;
+        const {emailAddress, checked, password} = this.state;
+        const data = {
+            EmailAddress: emailAddress,
+            Password: password
         }
-        history.push({
-            pathname: '/users',
-            state:{data: data}
-        })
+
+        let user = await userService.login(data).then(res => {
+            if(res.status==200){
+                // alert(res.Data.EmailAddress)
+                // localStorage.setItem('rememberMe', checked);
+                // localStorage.setItem('user', checked ? emailAddress : '');
+                localStorage.setItem('userData', res.Data.EmailAddress);
+                history.push({
+                    pathname: '/users',
+                })
+                // history.push({
+                //     pathname: '/users',
+                //     state:{data: res.Data}
+                // })
+            }else{
+                alert(res.Data)
+            }
+        }).catch(err => {
+            debugger;
+        });
+
+
 
     }
-
 
     render(){
 
         const  {classes}=this.props;
-        const {checked,showPassword,password}=this.state;
+        const {checked,showPassword,password,emailAddress}=this.state;
 
         const handleClickShowPassword = () => {
             this.setState({showPassword: !showPassword })
 
         };
-        const Home= <h1>Home</h1>
         return (
             <div className={classes.maindiv}>
 
@@ -85,10 +111,11 @@ class login extends Component{
                                         <AccountCircle />
                                     </Grid>
                                     <Grid item className={classes.itemWidth}>
-                                        <TextField id="input-with-icon-grid" label="Email Address" className={classes.TextWidth}   onChange={(e)=>{
-                                            this.setState({emailAddress:e.target.value})
-                                        }
-                                        }/>
+                                        <TextField id="input-with-icon-grid" label="Email Address" className={classes.TextWidth}
+                                                   onChange={(e)=>{
+                                                            this.setState({emailAddress:e.target.value})}}
+                                                   value={emailAddress}
+                                        />
                                     </Grid>
                                 </Grid>
                                 <FormControl>

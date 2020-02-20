@@ -8,13 +8,16 @@ import LoginPage from "../LoginPage";
 import React from "react";
 
 function BasicRouting() {
+        const isLoggedIn=localStorage.getItem('userData')
+     // console.log(isLoggedIn)
         return (
                     <Switch>
-                        <Route exact path="/" component={()=>{return <LoginPage />}} />
-                        <Route exact path="/users" component={(props)=>{return <Dashboard/>}} />
-                        <Route exact path="/about" component={(props)=>{return <Controls />}} />
+                        <Route exact path="/" component={(props)=>{
+                           return  isLoggedIn!=null ? <Dashboard {...props} /> : <LoginPage />
+                            }} />
+                        <Route exact path="/users" component={()=>{ return <Dashboard />}} />
+                        <Route exact path="/about" component={()=>{return <Controls />}} />
                     </Switch>
         )
 }
-
 export default BasicRouting;
