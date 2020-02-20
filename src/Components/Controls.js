@@ -10,6 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import  FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Header from '../CommonComponents/AppBar';
 
 class Controls extends Component {
     constructor() {
@@ -36,6 +37,7 @@ class Controls extends Component {
             //     </Button>
             // </Box>
             <div>
+                <Header />
                 <form style={classes.form}>
                 <span className={classes.formstyle}>
                     <input

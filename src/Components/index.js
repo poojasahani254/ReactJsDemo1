@@ -1,5 +1,7 @@
 import React, {Component, createElement} from 'react';
 import Welcome from './funtionalCompEx';
+import Header from '../CommonComponents/AppBar';
+
 class IndexPage extends Component {
 
     componentDidMount() {
@@ -7,6 +9,7 @@ class IndexPage extends Component {
     }
 
     render(){
+
         const element = (
             <h1>
                 Hello,index!
@@ -30,9 +33,9 @@ class IndexPage extends Component {
                                   text={comment.text}
                                   author={comment.author}/>;
 
-
         return(
             <div>
+                <Header />
                 <h1>hello From Index{element}</h1>
                 {element2}
                 {element3}

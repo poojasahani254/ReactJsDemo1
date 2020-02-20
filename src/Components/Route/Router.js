@@ -2,10 +2,14 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import React from "react";
+
+
 import Dashboard from "../Dashboard";
 import Controls from "../Controls";
 import LoginPage from "../LoginPage";
-import React from "react";
+import IndexPage from "../index";
+import PageNotFound from "../PageNotFund";
 
 function BasicRouting() {
         const isLoggedIn=localStorage.getItem('userData')
@@ -17,6 +21,8 @@ function BasicRouting() {
                             }} />
                         <Route exact path="/login" component={()=>{ return <LoginPage />}} />
                         <Route exact path="/about" component={()=>{return <Controls />}} />
+                        <Route exact path="/index" component={()=>{return <IndexPage />}} />
+                        <Route component={PageNotFound} />
                     </Switch>
         )
 }

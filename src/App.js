@@ -8,12 +8,13 @@ import {
 import Router from './Components/Route/Router';
 import {Provider} from 'react-redux';
 import configstore from '../src/Store/Store';
-
+import createHistory from 'history/createBrowserHistory';
+const history = createHistory();
 
 function App() {
   return (
       <Provider store={configstore}>
-          <BrowserRouter>
+          <BrowserRouter history={history}>
               <Router />
           </BrowserRouter>
       </Provider>

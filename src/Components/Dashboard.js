@@ -8,16 +8,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import VerifiedUser from '@material-ui/icons/VerifiedUser';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import {connect} from "react-redux";
 
@@ -48,48 +38,6 @@ class Controls extends Component {
       this.setState({open:false})
     }
 
-    toggleDrawer =(side,open)=>{
-        this.setState({[side]:open})
-    }
-
-    logout =() =>{
-        let {history}=this.props;
-        localStorage.clear()
-            history.push({
-                pathname: '/login'
-            })
-    }
-
-    sideList=side=>{
-        const {classes}=this.props;
-        return(
-            <div
-                className={classes.list}
-                role="presentation"
-                    // this.toggleDrawer( side,false)}
-            >
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text} component={Link} to={'/'+text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-            </div>
-        );
-
-}
-
     render() {
         // const { data } = this.props.location.state
         const {open,CategoryData}=this.state
@@ -114,10 +62,9 @@ class Controls extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-                <Drawer  open={this.state.left} onClose={()=>this.toggleDrawer( 'left',false)}>
-                    {this.sideList('left')}
-                </Drawer>
-                <Header OnDrawer={() => this.toggleDrawer('left',true)} logout={this.logout} />
+
+                <Header  />
+
                 <div className={classes.root}>
                     {
                         CategoryData.map((item,index)=>{
