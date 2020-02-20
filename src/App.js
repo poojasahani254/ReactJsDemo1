@@ -6,13 +6,18 @@ import {
   Switch,
 } from "react-router-dom";
 import Router from './Components/Route/Router';
+import {Provider} from 'react-redux';
+import configstore from '../src/Store/Store';
 
 
 function App() {
   return (
-      <BrowserRouter>
-          <Router />
-      </BrowserRouter>
+      <Provider store={configstore}>
+          <BrowserRouter>
+              <Router />
+          </BrowserRouter>
+      </Provider>
+
   );
 }
 

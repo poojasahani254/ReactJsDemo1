@@ -15,7 +15,7 @@ function BasicRouting() {
                         <Route exact path="/" component={(props)=>{
                            return  isLoggedIn!=null ? <Dashboard {...props} /> : <LoginPage />
                             }} />
-                        <Route exact path="/users" component={()=>{ return <Dashboard />}} />
+                        <Route exact path="/login" component={()=>{ return <LoginPage />}} />
                         <Route exact path="/about" component={()=>{return <Controls />}} />
                     </Switch>
         )

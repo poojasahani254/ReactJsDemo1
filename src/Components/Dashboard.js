@@ -19,6 +19,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
+import {connect} from "react-redux";
+
 import {userService} from "../Services/userServices";
 import config from "./config";
 import Header from '../CommonComponents/AppBar';
@@ -28,13 +30,13 @@ class Controls extends Component {
         super(props);
         this.state = {
             open:true,
-            anchorEl:null,
             left: false,
             CategoryData:[]
         }
     }
 
     componentDidMount() {
+        console.log(this.props.UserData)
         userService.getAllCategory().then((response)=>{
             this.setState({CategoryData:response})
         }).catch((err)=>{
@@ -46,14 +48,6 @@ class Controls extends Component {
       this.setState({open:false})
     }
 
-    handleMenuClose =()=>{
-        this.setState({anchorEl:null})
-    }
-
-    handleProfileMenuOpen = event => {
-        this.setState({anchorEl:event.currentTarget})
-    };
-
     toggleDrawer =(side,open)=>{
         this.setState({[side]:open})
     }
@@ -62,7 +56,7 @@ class Controls extends Component {
         let {history}=this.props;
         localStorage.clear()
             history.push({
-                pathname: '/'
+                pathname: '/login'
             })
     }
 
@@ -76,7 +70,7 @@ class Controls extends Component {
             >
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text} component={Link} to={'/about'}>
+                        <ListItem button key={text} component={Link} to={'/'+text}>
                             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
@@ -98,26 +92,8 @@ class Controls extends Component {
 
     render() {
         // const { data } = this.props.location.state
-        const {open,anchorEl,CategoryData}=this.state
+        const {open,CategoryData}=this.state
         const {classes} = this.props;
-        const menuId = 'primary-search-account-menu';
-        const isMenuOpen = Boolean(anchorEl);
-
-        const renderMenu = (
-            <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                id={menuId}
-                keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={isMenuOpen}
-                onClose={this.handleMenuClose}
-            >
-                <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={this.logout}>Logout</MenuItem>
-            </Menu>
-        );
-
 
         return (
             <div className={classes.grow1}>
@@ -141,8 +117,7 @@ class Controls extends Component {
                 <Drawer  open={this.state.left} onClose={()=>this.toggleDrawer( 'left',false)}>
                     {this.sideList('left')}
                 </Drawer>
-                <Header OnDrawer={() => this.toggleDrawer('left',true)} />
-
+                <Header OnDrawer={() => this.toggleDrawer('left',true)} logout={this.logout} />
                 <div className={classes.root}>
                     {
                         CategoryData.map((item,index)=>{
@@ -153,10 +128,7 @@ class Controls extends Component {
                                 </Paper>
                             )
                         })
-
                     }
-
-
                 </div>
             </div>
         )
@@ -183,4 +155,10 @@ const styles = theme => ({
     }
 });
 
-export default withStyles(styles)(withRouter(Controls));
+const mapToStateProps = state => {
+    const UserData = state.LoginReducer;
+    return {
+        UserData,
+    };
+};
+export default withStyles(styles)(connect(mapToStateProps,null)(withRouter(Controls)));

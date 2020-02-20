@@ -20,11 +20,11 @@ import {
     withRouter,
 
 } from "react-router-dom";
-import {userService} from '../Services/userServices'
+import {Login} from '../Action/Login'
+import {connect} from "react-redux";
 
 const swidth=window.innerWidth;
 const sheight=window.innerHeight;
-
 
 class login extends Component{
     constructor() {
@@ -53,35 +53,34 @@ class login extends Component{
     }
 
     loginAction = async () => {
-        let {history} = this.props;
+        debugger
+        let {history,UserData} = this.props;
+        debugger
         const {emailAddress, checked, password} = this.state;
         const data = {
             EmailAddress: emailAddress,
             Password: password
         }
 
-        let user = await userService.login(data).then(res => {
-            if(res.status==200){
-                // alert(res.Data.EmailAddress)
-                // localStorage.setItem('rememberMe', checked);
-                // localStorage.setItem('user', checked ? emailAddress : '');
-                localStorage.setItem('userData', res.Data.EmailAddress);
-                history.push({
-                    pathname: '/users',
-                })
-                // history.push({
-                //     pathname: '/users',
-                //     state:{data: res.Data}
-                // })
-            }else{
-                alert(res.Data)
-            }
-        }).catch(err => {
-            debugger;
-        });
-
-
-
+       let a=await this.props.Login(data).then(res=>{
+               if(res.status==200){
+                   // alert(res.Data.EmailAddress)
+                   // localStorage.setItem('rememberMe', checked);
+                   // localStorage.setItem('user', checked ? emailAddress : '');
+                   localStorage.setItem('userData', res.Data.EmailAddress);
+                   history.push({
+                       pathname: '/',
+                   })
+                   // history.push({
+                   //     pathname: '/users',
+                   //     state:{data: res.Data}
+                   // })
+               }else{
+                   alert(res.Data)
+               }
+       }).catch(err=>{
+           debugger
+       })
     }
 
     render(){
@@ -245,4 +244,10 @@ const  styles={
 
 }
 
-export default withStyles(styles)(withRouter(login));
+const mapToStateProps = state => {
+    const UserData = state.LoginReducer;
+    return {
+        UserData,
+    };
+};
+export default withStyles(styles)(connect(mapToStateProps,{Login})(withRouter(login)));

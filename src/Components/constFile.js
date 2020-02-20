@@ -1,5 +1,2 @@
-// const List=()=>{
-//     return(
-//
-//     )
-// }
+export const  ISLOGIN = "ISLOGIN";
+
