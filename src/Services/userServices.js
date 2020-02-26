@@ -1,6 +1,7 @@
 import config from '../Components/config';
 import axios from 'axios';
 function login(data) {
+    debugger
     return new Promise((resolve, reject) => {
         const requestOptions = {
             method: 'POST',

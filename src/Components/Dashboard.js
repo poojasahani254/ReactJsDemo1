@@ -11,6 +11,17 @@ import VerifiedUser from '@material-ui/icons/VerifiedUser';
 import Paper from '@material-ui/core/Paper';
 import {connect} from "react-redux";
 
+
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+
+
 import {userService} from "../Services/userServices";
 import config from "./config";
 import Header from '../CommonComponents/AppBar';
@@ -45,60 +56,75 @@ class Controls extends Component {
 
         return (
             <div className={classes.grow1}>
-                <Dialog
-                    open={open}
-                    onClose={this.handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title"><VerifiedUser fontSize='large' /></DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Welcome {localStorage.getItem('userData')}
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={()=>this.handleClose()} color="primary" autoFocus>
-                            Ok
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                {/*<Dialog*/}
+                {/*    open={open}*/}
+                {/*    onClose={this.handleClose}*/}
+                {/*    aria-labelledby="alert-dialog-title"*/}
+                {/*    aria-describedby="alert-dialog-description">*/}
+                {/*    <DialogTitle id="alert-dialog-title"><VerifiedUser fontSize='large' /></DialogTitle>*/}
+                {/*    <DialogContent>*/}
+                {/*        <DialogContentText id="alert-dialog-description">*/}
+                {/*            Welcome {localStorage.getItem('userData')}*/}
+                {/*        </DialogContentText>*/}
+                {/*    </DialogContent>*/}
+                {/*    <DialogActions>*/}
+                {/*        <Button onClick={()=>this.handleClose()} color="primary" autoFocus>*/}
+                {/*            Ok*/}
+                {/*        </Button>*/}
+                {/*    </DialogActions>*/}
+                {/*</Dialog>*/}
 
                 <Header  />
 
-                <div className={classes.root}>
-                    {
-                        CategoryData.map((item,index)=>{
-                            return(
-                                <Paper elevation={3}>
-                                    <img src={`${config.apiUrl}/images/Image/category/${item.CategoryImage}`} alt="product" className={classes.imagstyle}/>
-                                     <p>{item.Category_name}</p>
-                                </Paper>
-                            )
-                        })
-                    }
-                </div>
+
+                <Container className={classes.cardGrid} maxWidth="md" classes={{maxWidthMd:classes.maxWidthMd}}>
+                    {/* End hero unit */}
+                    <Grid container spacing={1} onClick={()=>{
+                        alert('hello')
+                    }}>
+                        {CategoryData.map((item,index) => (
+                            <Grid item key={index} xs={12} sm={4} md={3}>
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={`${config.apiUrl}/images/Image/category/${item.CategoryImage}`}
+                                        title="Image title"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {item.Category_name}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Container>
+
             </div>
         )
     }
 }
 
 const styles = theme => ({
-    list: {
-        width: 250,
+    cardGrid: {
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(3),
     },
-    fullList: {
-        width: 'auto',
-    },root: {
+    card: {
+        height: '100%',
         display: 'flex',
-        flexWrap: 'wrap',
-        '& > *': {
-            margin: theme.spacing(1),
-            width: theme.spacing(25),
-            height: theme.spacing(25),
-        },
-    },imagstyle:{
-        height:'70%',
-        width:'100%'
+        flexDirection: 'column',
+    },
+    cardMedia: {
+        paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+        flexGrow: 1,
+        textAlign:'center',
+        justifyContent:'center'
+    }, maxWidthMd:{
+        maxWidth:'100% !important',
     }
 });
 
