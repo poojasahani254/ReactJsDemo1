@@ -9,6 +9,7 @@ import Dashboard from "../Dashboard";
 import Controls from "../Controls";
 import LoginPage from "../LoginPage";
 import IndexPage from "../index";
+import ArrayExample from '../ArrayExample';
 import PageNotFound from "../PageNotFund";
 
 function BasicRouting() {
@@ -22,6 +23,7 @@ function BasicRouting() {
                         <Route exact path="/login" component={()=>{ return <LoginPage />}} />
                         <Route exact path="/about" component={()=>{return <Controls />}} />
                         <Route exact path="/index" component={()=>{return <IndexPage />}} />
+                        <Route exact path="/Array" component={ArrayExample} />
                         <Route component={PageNotFound} />
                     </Switch>
         )

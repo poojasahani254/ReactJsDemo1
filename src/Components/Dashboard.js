@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import VerifiedUser from '@material-ui/icons/VerifiedUser';
 import Paper from '@material-ui/core/Paper';
 import {connect} from "react-redux";
-
+import CreatableSelect from 'react-select/creatable';
 
 
 import Card from '@material-ui/core/Card';
@@ -26,13 +26,21 @@ import {userService} from "../Services/userServices";
 import config from "./config";
 import Header from '../CommonComponents/AppBar';
 
+const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+];
+let arr=[]
 class Controls extends Component {
     constructor(props) {
         super(props);
         this.state = {
             open:true,
             left: false,
-            CategoryData:[]
+            CategoryData:[],
+            selectedOption: null,
+            inputValue: '',
         }
     }
 
@@ -40,6 +48,15 @@ class Controls extends Component {
         console.log(this.props.UserData)
         userService.getAllCategory().then((response)=>{
             this.setState({CategoryData:response})
+            // this.state.CategoryData.map((item)=>{
+            //     return item.Category_name
+            // })
+            for(let i=0; i<response.length; i++){
+                let obj = { value: response[i].Category_name, label: response[i].Category_name};
+                arr.push(obj)
+            }
+            console.log(arr)
+
         }).catch((err)=>{
             alert(err)
         })
@@ -49,10 +66,16 @@ class Controls extends Component {
       this.setState({open:false})
     }
 
+    handleChange1 = (newValue) => {
+        console.log('Value Changed');
+        console.log(newValue);
+    };
+
     render() {
         // const { data } = this.props.location.state
         const {open,CategoryData}=this.state
         const {classes} = this.props;
+
 
         return (
             <div className={classes.grow1}>
@@ -75,7 +98,6 @@ class Controls extends Component {
                 {/*</Dialog>*/}
 
                 <Header  />
-
 
                 <Container className={classes.cardGrid} maxWidth="md" classes={{maxWidthMd:classes.maxWidthMd}}>
                     {/* End hero unit */}
@@ -100,6 +122,12 @@ class Controls extends Component {
                         ))}
                     </Grid>
                 </Container>
+                <CreatableSelect
+                    isClearable
+                    onChange={this.handleChange1}
+                    options={arr}
+                    isMulti
+                />
 
             </div>
         )

@@ -20,12 +20,11 @@ function login(data) {
             .catch(err => {
                 return   reject(err)
             });
-
     })
-
 }
 
 function getAllCategory() {
+    debugger
     return new Promise((resolve, reject) => {
         axios.get(`${config.apiUrl}/GetAllCategory`).then(response=>{
             return resolve(response.data)

@@ -40,6 +40,9 @@ export default function PrimarySearchAppBar(props) {
         {
             path: "/index",
             title:'Demo'
+        },{
+            path: "/Array",
+            title:'Array Operation'
         }
     ];
 
