@@ -43,6 +43,9 @@ export default function PrimarySearchAppBar(props) {
         },{
             path: "/Array",
             title:'Array Operation'
+        },{
+            path: "/ImageUpload",
+            title:'Upload Image'
         }
     ];
 
@@ -88,7 +91,7 @@ export default function PrimarySearchAppBar(props) {
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                {['All mail', 'Trash'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                         <ListItemText primary={text} />

@@ -8,13 +8,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import VerifiedUser from '@material-ui/icons/VerifiedUser';
-import Paper from '@material-ui/core/Paper';
 import {connect} from "react-redux";
 import CreatableSelect from 'react-select/creatable';
-
+import Modal from '@material-ui/core/Modal';
 
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
@@ -26,11 +24,6 @@ import {userService} from "../Services/userServices";
 import config from "./config";
 import Header from '../CommonComponents/AppBar';
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
 let arr=[]
 class Controls extends Component {
     constructor(props) {
@@ -41,6 +34,7 @@ class Controls extends Component {
             CategoryData:[],
             selectedOption: null,
             inputValue: '',
+            ismodal:false
         }
     }
 
@@ -73,36 +67,36 @@ class Controls extends Component {
 
     render() {
         // const { data } = this.props.location.state
-        const {open,CategoryData}=this.state
+        const {open,CategoryData,ismodal}=this.state
         const {classes} = this.props;
-
 
         return (
             <div className={classes.grow1}>
-                {/*<Dialog*/}
-                {/*    open={open}*/}
-                {/*    onClose={this.handleClose}*/}
-                {/*    aria-labelledby="alert-dialog-title"*/}
-                {/*    aria-describedby="alert-dialog-description">*/}
-                {/*    <DialogTitle id="alert-dialog-title"><VerifiedUser fontSize='large' /></DialogTitle>*/}
-                {/*    <DialogContent>*/}
-                {/*        <DialogContentText id="alert-dialog-description">*/}
-                {/*            Welcome {localStorage.getItem('userData')}*/}
-                {/*        </DialogContentText>*/}
-                {/*    </DialogContent>*/}
-                {/*    <DialogActions>*/}
-                {/*        <Button onClick={()=>this.handleClose()} color="primary" autoFocus>*/}
-                {/*            Ok*/}
-                {/*        </Button>*/}
-                {/*    </DialogActions>*/}
-                {/*</Dialog>*/}
+                <Dialog
+                    open={open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title"><VerifiedUser fontSize='large' /></DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Welcome {localStorage.getItem('userData')}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={()=>this.handleClose()} color="primary" autoFocus>
+                            Ok
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
                 <Header  />
 
                 <Container className={classes.cardGrid} maxWidth="md" classes={{maxWidthMd:classes.maxWidthMd}}>
                     {/* End hero unit */}
                     <Grid container spacing={1} onClick={()=>{
-                        alert('hello')
+                        // alert('hello')
+                        this.setState({ismodal:true})
                     }}>
                         {CategoryData.map((item,index) => (
                             <Grid item key={index} xs={12} sm={4} md={3}>
@@ -129,6 +123,20 @@ class Controls extends Component {
                     isMulti
                 />
 
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={ismodal}
+                    onClose={()=>{this.setState({ismodal:false})}}
+                >
+                    <div  className={classes.paper}>
+                        <h2 id="simple-modal-title">Text in a modal</h2>
+                        <p id="simple-modal-description">
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </p>
+
+                    </div>
+                </Modal>
             </div>
         )
     }
@@ -153,7 +161,15 @@ const styles = theme => ({
         justifyContent:'center'
     }, maxWidthMd:{
         maxWidth:'100% !important',
-    }
+    },paper: {
+        position: 'absolute',
+        // width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+
+    },
 });
 
 const mapToStateProps = state => {
