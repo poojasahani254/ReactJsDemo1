@@ -1,7 +1,6 @@
 import config from '../Components/config';
 import axios from 'axios';
 function login(data) {
-    debugger
     return new Promise((resolve, reject) => {
         const requestOptions = {
             method: 'POST',
@@ -24,7 +23,6 @@ function login(data) {
 }
 
 function getAllCategory() {
-    debugger
     return new Promise((resolve, reject) => {
         axios.get(`${config.apiUrl}/GetAllCategory`).then(response=>{
             return resolve(response.data)
@@ -34,7 +32,20 @@ function getAllCategory() {
     })
 
 }
+function AddCategory(data) {
+    debugger
+    return new Promise((resolve, reject) => {
+        debugger
+        axios.post(`${config.apiUrl}/AddCategory`,data).then(response=>{
+            return resolve(response.data)
+        }).catch((err)=>{
+
+            return reject(err)
+        })
+    })
+}
 export const userService = {
     login,
-    getAllCategory
+    getAllCategory,
+    AddCategory
 };

@@ -28,6 +28,7 @@ class IndexPage extends Component {
             const url=`${config.apiUrl}/UploadImage`
             const data = new FormData();
             data.append('fileData', event.target.files[0]);
+            console.log(data)
             return axios.post(url,data).then((res)=>{
                 console.log(res)
             }).catch((err)=>{

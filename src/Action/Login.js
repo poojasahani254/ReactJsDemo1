@@ -1,5 +1,5 @@
 import {userService} from '../Services/userServices';
-import {ISLOGIN} from '../Components/constFile'
+import {ISLOGIN,IS_CATRGORY} from '../Components/constFile'
 
 export const Login=(data)=>{
     return (dispatch)=>{
@@ -13,5 +13,21 @@ export const Login=(data)=>{
             alert('Something Wrong'+err)
             // return new Promise.reject(err)
         })
+    }
+}
+
+export const AddCategory=(data)=>{
+    debugger
+    return (dispatch) =>{
+        return userService.AddCategory(data).then((response)=>{
+            dispatch({
+                type:IS_CATRGORY,
+                payload: response
+            })
+            return  Promise.resolve(response)
+        }).catch((err)=>{
+            console.log(err)
+        })
+
     }
 }

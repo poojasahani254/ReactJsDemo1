@@ -20,11 +20,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
 
 
 export default function PrimarySearchAppBar(props) {
     const classes = useStyles();
+    const history=useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuId = 'primary-search-account-menu';
     const isMenuOpen = Boolean(anchorEl);
@@ -67,11 +68,11 @@ export default function PrimarySearchAppBar(props) {
     };
 
     const logout =() =>{
-        let {history}=this.props;
         localStorage.clear()
         history.push({
             pathname: '/login'
         })
+
     }
 
     const sideList = side => (

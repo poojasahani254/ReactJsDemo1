@@ -53,9 +53,7 @@ class login extends Component{
     }
 
     loginAction = async () => {
-        debugger
         let {history,UserData} = this.props;
-        debugger
         const {emailAddress, checked, password} = this.state;
         const data = {
             EmailAddress: emailAddress,
@@ -79,7 +77,7 @@ class login extends Component{
                    alert(res.Data)
                }
        }).catch(err=>{
-           debugger
+           console.log(err)
        })
     }
 
