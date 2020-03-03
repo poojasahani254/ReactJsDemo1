@@ -17,7 +17,6 @@ export const Login=(data)=>{
 }
 
 export const AddCategory=(data)=>{
-    debugger
     return (dispatch) =>{
         return userService.AddCategory(data).then((response)=>{
             dispatch({

@@ -62,7 +62,7 @@ class Controls extends Component {
             this.setState({open:true})
         }
 
-        console.log(this.props.UserData)
+        // console.log(this.props.UserData)
        this.GetData()
     }
 
@@ -74,7 +74,7 @@ class Controls extends Component {
                 let obj = { value: response[i].Category_name, label: response[i].Category_name};
                 arr.push(obj)
             }
-            console.log(arr)
+            // console.log(arr)
 
         }).catch((err)=>{
             alert(err)
@@ -91,15 +91,16 @@ class Controls extends Component {
           filename:'Upload File',
           filePath:''
       })
+        document.body.style.overflow = 'unset';
     }
 
     handleChange1 = (newValue) => {
-        console.log('Value Changed');
-        console.log(newValue);
+        // console.log('Value Changed');
+        // console.log(newValue);
     };
 
     ReadFile = (event)=>{
-        console.log(event.target.files[0].name)
+        // console.log(event.target.files[0].name)
         this.setState({filename:event.target.files[0].name,filePath:event.target.files[0]})
     }
 
@@ -119,7 +120,7 @@ class Controls extends Component {
         const data = new FormData();
         data.append('fileData', filePath);
         data.append('name',CategoryName);
-       console.log(filePath)
+       // console.log(filePath)
         // const data={
         //     filedata:filePath,
         //     Category_name:CategoryName
@@ -127,7 +128,8 @@ class Controls extends Component {
         this.props.AddCategory(data).then(response=>{
             this.GetData();
         });
-        this.setState({isSnack:true,ismodal:false})
+        this.setState({isSnack:true,ismodal:false,CategoryName:'', filename:'Upload File',})
+        document.body.style.overflow = 'unset';
 
     }
 
@@ -136,7 +138,7 @@ class Controls extends Component {
     }
 
     render() {
-        console.log("sds",this.state.CategoryData)
+        // console.log("sds",this.state.CategoryData)
         // const { data } = this.props.location.state
         const {open,CategoryData,ismodal,filename,CategoryName,isdisabled,isInsertdisabled,isSnack,backdrop}=this.state
         const {classes} = this.props;
@@ -170,6 +172,7 @@ class Controls extends Component {
                     <Grid container spacing={1}>
                         {CategoryData.map((item,index) => (
                             <Grid item key={index} xs={12} sm={4} md={3} onClick={()=>{
+                                document.body.style.overflow = 'hidden';
                                 this.setState({ismodal:true,CategoryName:item.Category_name,filename:item.CategoryImage,isInsertdisabled:true})
                             }}>
                                 <Card className={classes.card}>
@@ -205,7 +208,6 @@ class Controls extends Component {
                         isMulti
                     />
                 </Container>
-
                 <Dialog
                     open={ismodal}
                     aria-labelledby="alert-dialog-title"
@@ -259,7 +261,7 @@ class Controls extends Component {
                     open={isSnack}
                     onClose={this.handleSnackClose}
                     anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                    autoHideDuration={10000}
+                    autoHideDuration={5000}
                     message="Data Added Successfully!"
                 />
             </div>
@@ -279,6 +281,10 @@ const styles = theme => ({
     },
     cardMedia: {
         paddingTop: '56.25%', // 16:9
+    },grow1:{
+      height:'auto',
+      width:'100%',
+      //   overflowY:'auto'
     },
     cardContent: {
         flexGrow: 1,
@@ -302,16 +308,16 @@ const styles = theme => ({
         color: '#fff'
     },dialogWidth: {
         width: '370px',
-        '@media (max-width: 480px)': {
-            width: 'auto'
-        }
+        // '@media (max-width: 480px)': {
+        //     width: 'auto'
+        // }
     },dialogInnerDiv: {
         display: 'flex',
         flexDirection: 'column',
         padding: 12,
     }, btnContainer: {
         justifyContent: 'flex-end!important',
-        // marginBottom: '10px'
+        marginBottom: '10px'
     },closeButton: {
         position: 'absolute',
         right: theme.spacing(1),

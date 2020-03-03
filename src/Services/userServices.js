@@ -33,9 +33,7 @@ function getAllCategory() {
 
 }
 function AddCategory(data) {
-    debugger
     return new Promise((resolve, reject) => {
-        debugger
         axios.post(`${config.apiUrl}/AddCategory`,data).then(response=>{
             return resolve(response.data)
         }).catch((err)=>{
@@ -44,8 +42,19 @@ function AddCategory(data) {
         })
     })
 }
+function getAllLazyCategory(data) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${config.apiUrl}/GetLazyCategoryData/${data.page}`).then(response=>{
+            return resolve(response)
+        }).catch((err)=>{
+            return reject(err)
+        })
+    })
+
+}
 export const userService = {
     login,
     getAllCategory,
-    AddCategory
+    AddCategory,
+    getAllLazyCategory
 };

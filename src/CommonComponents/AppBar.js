@@ -47,7 +47,10 @@ export default function PrimarySearchAppBar(props) {
         },{
             path: "/ImageUpload",
             title:'Upload Image'
-        }
+        },{
+            path: "/Demo",
+            title:'Demo'
+        },
     ];
 
     const [state, setState] = React.useState({
