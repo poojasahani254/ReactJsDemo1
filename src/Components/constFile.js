@@ -1,2 +1,3 @@
 export const  ISLOGIN = "ISLOGIN";
 export const IS_CATRGORY="IS_CATRGORY";
+export const GET_PAGINATIONDATA="GET_PAGINATIONDATA";

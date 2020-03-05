@@ -6,7 +6,6 @@ class DragAndDrop extends Component {
     state = {
         drag: false
     }
-
     dropRef = React.createRef()
     handleDrag = (e) => {
         e.preventDefault()
@@ -56,7 +55,6 @@ class DragAndDrop extends Component {
         const {classes}=this.props;
         return (
             <div
-                style={{}}
                 className={classes.maindiv}
                 ref={this.dropRef}>
 

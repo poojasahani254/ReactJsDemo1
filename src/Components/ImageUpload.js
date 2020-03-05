@@ -15,14 +15,14 @@ class IndexPage extends Component {
         }
     }
 
-    // handleDrop = (files) => {
-    //     let fileList = this.state.files
-    //     for (var i = 0; i < files.length; i++) {
-    //         if (!files[i].name) return
-    //         fileList.push(files[i].name)
-    //     }
-    //     this.setState({files: fileList})
-    // }
+    handleDrop = (files) => {
+        let fileList = this.state.files
+        for (var i = 0; i < files.length; i++) {
+            if (!files[i].name) return
+            fileList.push(files[i].name)
+        }
+        this.setState({files: fileList})
+    }
 
     readFile =(event) =>{
             const url=`${config.apiUrl}/UploadImage`
@@ -48,14 +48,14 @@ class IndexPage extends Component {
                     <Button onClick={()=>alert('hello')} color="primary" variant={"contained"}>
                         Upload
                     </Button>
-                    {/*<DragAndDrop handleDrop={this.handleDrop} >*/}
-                    {/*    <div className={classes.DropDiv}>*/}
-                    {/*        {this.state.files.map((file) =>*/}
-                    {/*            <div key={file}>{file}</div>*/}
-                    {/*        )}*/}
-                    {/*    </div>*/}
+                    <DragAndDrop handleDrop={this.handleDrop} >
+                        <div className={classes.DropDiv}>
+                            {this.state.files.map((file) =>
+                                <div key={file}>{file}</div>
+                            )}
+                        </div>
 
-                    {/*</DragAndDrop>*/}
+                    </DragAndDrop>
                         <div className={classes.InnerDivBorder}>
                             <input type="file" accept="image/*"
                                    onChange={(event)=> { this.readFile(event) }}/>

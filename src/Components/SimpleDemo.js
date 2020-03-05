@@ -25,6 +25,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import {userService} from "../Services/userServices";
 import config from "./config";
+import {getAllLazyCategory} from "../Action/Login";
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -169,24 +172,24 @@ const EnhancedTableToolbar = props => {
      }
 
      GetData = (num)=>{
+         debugger
          const {isAllChecked,unchecked}=this.state
          const data={
              page:num
          }
-             userService.getAllLazyCategory(data).then((response)=>{
+             this.props.getAllLazyCategory(data).then((response)=>{
                  debugger
                  let arr=[...this.state.CategoryData]
 
                  this.setState({
-                     CategoryData:response.data.data,
-                     COUNT:response.data.count,
-                     AllId:arr.concat(response.data.data)
+                     CategoryData:response.data,
+                     COUNT:response.count,
+                     AllId:arr.concat(response.data)
                  })
 
                  if(isAllChecked){
-                     debugger
                      let a=[...this.state.selected]
-                     const arr1 = response.data.data.map(n => n._id);
+                     const arr1 = response.data.map(n => n._id);
                      let newSelecteds=this.arrayUnique(a.concat(arr1));
                      console.log(newSelecteds)
                      console.log(unchecked)
@@ -198,9 +201,7 @@ const EnhancedTableToolbar = props => {
                      //     })
                      //
                      // })
-                     debugger
                      this.setState({selected:newSelecteds});
-
 
                  }
 
@@ -212,6 +213,7 @@ const EnhancedTableToolbar = props => {
 
      render(){
         const {classes}= this.props;
+        console.log(this.props)
         const {
             order,
             orderBy,
@@ -297,7 +299,6 @@ const EnhancedTableToolbar = props => {
          for (let i = 1; i <= Math.ceil(COUNT/ rowsPerPage); i++) {
              pageNumbers.push(i);
          }
-
         const renderPageNumbers = pageNumbers.map(number => {
              let classs = page === number ? classes.active : '';
              return (
@@ -309,7 +310,7 @@ const EnhancedTableToolbar = props => {
             <div className={classes.root}>
                 <Header />
                 <Paper className={classes.paper}>
-                    <EnhancedTableToolbar numSelected={selected.length} />
+                    <EnhancedTableToolbar numSelected={isAllChecked ?COUNT:selected.length } />
                     <TableContainer>
                         <Table
                             className={classes.table}
@@ -318,7 +319,7 @@ const EnhancedTableToolbar = props => {
                             aria-label="enhanced table">
                             <EnhancedTableHead
                                 classes={classes}
-                                numSelected={selected.length}
+                                numSelected={isAllChecked ?COUNT:selected.length}
                                 order={order}
                                 orderBy={orderBy}
                                 onSelectAllClick={handleSelectAllClick}
@@ -450,4 +451,9 @@ const style=theme => ({
     }
 })
 
-export default withStyles(style)(EnhancedTable)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAllLazyCategory: node => dispatch(getAllLazyCategory(node)),
+    };
+};
+export default withStyles(style)(connect(null,mapDispatchToProps)(withRouter(EnhancedTable)));

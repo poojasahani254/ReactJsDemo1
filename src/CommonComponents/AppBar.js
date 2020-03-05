@@ -23,10 +23,11 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {Link,useHistory} from "react-router-dom";
 
 
-export default function PrimarySearchAppBar(props) {
+export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const history=useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [serachtext,setserachtext]=React.useState('');
     const menuId = 'primary-search-account-menu';
     const isMenuOpen = Boolean(anchorEl);
     const routes = [
@@ -49,7 +50,13 @@ export default function PrimarySearchAppBar(props) {
             title:'Upload Image'
         },{
             path: "/Demo",
-            title:'Demo'
+            title:'Demo Pagination'
+        },{
+            path: "/DragImage",
+            title:'Drag Image'
+        },{
+            path: "/ImageDrag",
+            title:'Image Drag Using Library'
         },
     ];
 
@@ -65,6 +72,10 @@ export default function PrimarySearchAppBar(props) {
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
     };
+
+    const HandlesearchText=event=>{
+            setserachtext(event.target.value)
+    }
 
     const handleMenuClose = () => {
         setAnchorEl(null);
@@ -121,7 +132,7 @@ export default function PrimarySearchAppBar(props) {
     );
 
     return (
-        <div className={classes.grow}>
+        <div className={classes.grow} searchText={serachtext}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -147,6 +158,7 @@ export default function PrimarySearchAppBar(props) {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={HandlesearchText}
                         />
                     </div>
                     <div className={classes.grow} />

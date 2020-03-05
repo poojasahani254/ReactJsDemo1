@@ -1,6 +1,8 @@
 const INTIAL_STATE={
         UserData:{},
-        CategoryData:{}
+        CategoryData:{},
+        GetPaginationData:[],
+        Count:0,
 }
 
 module.exports={
