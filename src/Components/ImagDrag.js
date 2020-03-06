@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
+import Header from '../CommonComponents/AppBar';
 
 import DragSortableList from 'react-drag-sortable'
 
@@ -16,10 +17,10 @@ const SortableList = SortableContainer(({items}) => {
     );
 });
 
-
-
-
 let arr=[]
+let placeholder = (
+    <div style={{opacity:0.3,backgroundColor:'gray'}}></div>
+);
 export default  class SortableComponent extends Component {
 
     state = {
@@ -36,6 +37,10 @@ export default  class SortableComponent extends Component {
         ],
         isMove:true
     };
+
+   componentDidMount() {
+       arr=[]
+   }
 
     onSortEnd = ({oldIndex, newIndex}) => {
         this.setState(({items}) => ({
@@ -66,16 +71,11 @@ export default  class SortableComponent extends Component {
     }
 
     render() {
+        this.renderDiv()
         return(
             <div>
-                {this.renderDiv()}
-                {
-                    // this.state.isMove ?
-                        <DragSortableList items={arr} onSort={this.onSort} type="grid" moveTransitionDuration={0.3} dropBackTransitionDuration={0.3}/>
-                        // :
-                        // <DragSortableList items={arr} onSort={this.onSort} type="horizontal" moveTransitionDuration={0.3} dropBackTransitionDuration={0.3}/>
-                }
-
+                <Header/>
+                <DragSortableList items={arr} onSort={this.onSort} type="grid" moveTransitionDuration={0.9} placeholder={placeholder}/>
                 {/*<SortableList items={this.state.items} onSortEnd={this.onSortEnd}   />*/}
             </div>
         );

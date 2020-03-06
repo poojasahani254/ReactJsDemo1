@@ -54,9 +54,16 @@ export default function PrimarySearchAppBar() {
         },{
             path: "/DragImage",
             title:'Drag Image'
-        },{
+        },
+    ];
+    const routes2 = [
+        {
             path: "/ImageDrag",
             title:'Image Drag Using Library'
+        },
+        {
+            path: "/ImageSlider",
+            title:'Image Slider'
         },
     ];
 
@@ -106,10 +113,10 @@ export default function PrimarySearchAppBar() {
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash'].map((text, index) => (
-                    <ListItem button key={text}>
+                {routes2.map((text, index) => (
+                    <ListItem button key={text.title} component={Link} to={text.path}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                        <ListItemText primary={text.title} />
                     </ListItem>
                 ))}
             </List>

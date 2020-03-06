@@ -14,6 +14,7 @@ import ImageUpload from '../ImageUpload';
 import SimpleDemo from '../SimpleDemo';
 import DragDropImage from "../Drag_DropImage";
 import ImageDrag from '../ImagDrag';
+import ImageSliderExample from "../ImageSliderExample";
 import PageNotFound from "../PageNotFund";
 
 function BasicRouting() {
@@ -32,6 +33,7 @@ function BasicRouting() {
                         <Route exact path="/DragImage" component={DragDropImage} />
                         <Route exact path="/Demo" component={SimpleDemo} />
                         <Route exact path="/ImageDrag" component={ImageDrag} />
+                        <Route exact path="/ImageSlider" component={ImageSliderExample} />
                         <Route component={PageNotFound} />
                     </Switch>
         )
