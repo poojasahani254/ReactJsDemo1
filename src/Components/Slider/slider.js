@@ -33,7 +33,7 @@ function Slider(props) {
             autoPlayRef.current()
         }
 
-        const interval = setInterval(play,  1000)
+        const interval = setInterval(play,  2000)
         return () => clearInterval(interval)
     }, [])
 

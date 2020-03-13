@@ -64,7 +64,14 @@ export default function PrimarySearchAppBar() {
         {
             path: "/ImageSlider",
             title:'Image Slider'
+        }, {
+            path: "/LibrarySlider",
+            title:'Library Slider'
+        }, {
+            path: "/LazyLaoding",
+            title:'Lazy Laoding'
         },
+
     ];
 
     const [state, setState] = React.useState({
